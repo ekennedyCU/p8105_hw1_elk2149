@@ -1,0 +1,21 @@
+Homework 1
+================
+2025-09-18
+
+## download library
+
+``` r
+library(moderndive)
+```
+
+## Load dataset.
+
+``` r
+data("early_january_weather")
+```
+
+## Accessing help for dataset
+
+``` r
+help("early_january_weather")
+```
