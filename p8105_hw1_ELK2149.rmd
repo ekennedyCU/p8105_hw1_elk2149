@@ -1,0 +1,111 @@
+---
+title: "Homework 1"
+output: github_document
+date: "2025-09-18"
+author: Evan Kennedy, ELK2149
+---
+
+```{r homework_1_setup, include = FALSE}
+
+#setting up
+#opening necessary libraries
+library(moderndive)
+library(tidyverse)
+
+#extracting data
+data("early_january_weather")
+
+#reviewing help file
+help("early_january_weather")
+```
+
+**Problem 1**  
+
+The variables in this dataset are: `r (names(early_january_weather))`.
+
+Flights were recorded from early Jan `r unique(early_january_weather $ year)`. The average temperature across this span of time was `r mean(early_january_weather$temp)` °F.
+
+The dataset has `r nrow(early_january_weather)` rows and `r ncol(early_january_weather)` columns.
+
+The following is a scatter plot of temperature by date and hour across early Jan.
+
+```{r tempXtime_hour_scatter, echo = FALSE}
+
+#creates scatter plot of temp by time_hour
+ggplot(early_january_weather, aes(x = time_hour, y = temp, color = humid)) + 
+    geom_point()
+
+#saves scatter plot
+ggsave("tempXtime_hour_scatter.pdf", height = 4, width = 6)
+
+```
+
+Temperature and humidity appear to be increasing over time, with daily fluctuation, and humidity peaking around Jan 14th.
+
+**Problem 2**  
+
+The below code samples 10 variables from a normal distribution, evaluates how many of these variables are above zero, creates a character vector of length 10, and a factor vector of three different "levels".
+
+```{r problem_2}
+
+#Generating normal distribution, evaluating which are above 0, creating a character vector, and factor vector.
+
+pb_2 = tibble(
+  norm_samp = rnorm(10),
+  norm_samp_pos = norm_samp > 0,
+  vec_char = c("One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"),
+  vec_factor = factor(c("Level 1", "Level 1", "Level 1", "Level 2", "Level 2", "Level 2", "Level 3", "Level 3", "Level 3", "Level 3"))
+)    
+
+pb_2
+```
+
+The below code takes the mean of each variable.
+
+```{r problem_2a}
+
+mean_norm_samp <- pb_2 |> # mean of the variables
+  pull(norm_samp) |>    # extracts the "norm_samp" column
+  mean()
+
+mean_norm_samp
+
+mean_norm_samp_pos <- pb_2 |> # mean of how many are above 0
+  pull(norm_samp_pos) |>    # extracts the "norm_samp_pos" column
+  mean()
+
+mean_norm_samp_pos
+
+mean_vec_char <- pb_2 |> # attempted mean of the character vector
+  pull(vec_char) |>    # extracts the "vec_char" column
+  mean()
+
+mean_vec_factor<- pb_2 |> # attempted mean fo the factor vector
+  pull(vec_factor) |>    # extracts the "vec_factor" column
+  mean()
+
+
+```
+
+You cannot take a mean of the non-numeric character and factor variables, so it returns as NA. The mean of mean_norm_samp_pos is actually the proportion of variables that are above zero.
+
+```{r problem_2b, eval = FALSE}
+
+mean_norm_samp_pos <- pb_2 |> 
+  pull(norm_samp_pos) |>    # extracts the "norm_samp_pos" column
+  as.numeric() |>   # converts to numeric value
+  mean()
+
+mean_vec_char <- pb_2 |> 
+  pull(vec_char) |>    # extracts the "vec_char" column
+  as.numeric() |>   # converts to numeric value
+  mean()
+
+mean_vec_factor<- pb_2 |> 
+  pull(vec_factor) |>    # extracts the "vec_factor" column
+  as.numeric() |>     # converts to numeric value
+  mean()
+
+```
+
+You can use as.numeric to convert factors, and some characters into numeric values. Because I spelled out my character numbers (one - ten), rather than using 1-10, this didn't work for the character vector.
