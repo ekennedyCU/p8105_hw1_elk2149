@@ -2,20 +2,39 @@ Homework 1
 ================
 2025-09-18
 
-## download library
-
 ``` r
 library(moderndive)
+library(tidyverse)
 ```
 
-## Load dataset.
+    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+    ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+    ## ✔ ggplot2   3.5.2     ✔ tibble    3.3.0
+    ## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+    ## ✔ purrr     1.1.0     
+    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ✖ dplyr::filter() masks stats::filter()
+    ## ✖ dplyr::lag()    masks stats::lag()
+    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 
 ``` r
 data("early_january_weather")
-```
-
-## Accessing help for dataset
-
-``` r
 help("early_january_weather")
 ```
+
+The variables in this dataset are: origin, year, month, day, hour, temp,
+dewp, humid, wind_dir, wind_speed, wind_gust, precip, pressure, visib,
+time_hour.
+
+Flights were recorded from 2013. The average temperature was 39.5821229
+°F.
+
+The dataset has 358 rows and 15 columns.
+
+``` r
+ggplot(early_january_weather, aes(x = time_hour, y = temp)) + 
+    geom_point()
+```
+
+![](Untitled_files/figure-gfm/tempXtime_hour_scatter-1.png)<!-- -->
